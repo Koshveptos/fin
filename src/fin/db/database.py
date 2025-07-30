@@ -1,5 +1,10 @@
 import sqlite3
-DB_name = 'finance.db'
+import os
+
+# Получаем путь к директории с базой данных
+DB_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_name = os.path.join(DB_DIR, 'finance.db')
+
 def add_category(name):
     with sqlite3.connect(DB_name) as conn:
         cursor = conn.cursor()
@@ -51,10 +56,9 @@ def get_category(category_name):
                        FROM payments
                         WHERE category_id = ?""" 
                        , (category[0],))
-        payments = cursor.fetchone()
+        payments = cursor.fetchall()
         return payments
         
-
 
     
 # add_category('pipisi')

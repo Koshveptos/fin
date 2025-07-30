@@ -1,5 +1,10 @@
 import sqlite3
-DB_name = 'finance.db'
+import os
+
+# Получаем путь к директории с базой данных
+DB_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_name = os.path.join(DB_DIR, 'finance.db')
+
 def init_db():
     with sqlite3.connect(DB_name) as conn:
         cursor = conn.cursor()
@@ -13,6 +18,7 @@ def init_db():
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS  payments(
                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                       name    TEXT,
                        date DATE  NOT NULL,
                        amount INTEGER NOT NULL,
                        type TEXT NOT NULL,
